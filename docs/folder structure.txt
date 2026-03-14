@@ -1,0 +1,31 @@
+bookshop_app/
+│
+├─ frontend/                   # Flutter mobile app
+│   ├─ lib/                    # Flutter source code
+│   ├─ assets/                 # Images, fonts, icons
+│   ├─ test/                   # Flutter widget/unit tests
+│   └─ pubspec.yaml            # Flutter config
+│
+├─ backend/                    # Spring Boot server
+│   ├─ src/
+│   │   ├─ main/
+│   │   │   ├─ java/           # Java source code
+│   │   │   └─ resources/      # application.properties, static files
+│   │   └─ test/               # Unit/Integration tests
+│   └─ build.gradle            # Gradle config
+│
+├─ recsys/                     # Python recommendation microservice
+│   ├─ data/                   # Raw and processed datasets (books.csv, interactions.csv)
+│   ├─ notebooks/              # Experiment notebooks
+│   ├─ src/                    # Python source code
+│   │   ├─ models/             # Trained ML models
+│   │   └─ api/                # FastAPI endpoints
+│   └─ requirements.txt        # Python dependencies
+│
+├─ scripts/                    # Utility scripts (data preprocessing, ETL)
+│
+├─ tests/                      # Integration / End-to-end tests
+│
+├─ docs/                       # Documentation, diagrams, README.md
+│
+└─ .gitignore                  # Ignore unnecessary files

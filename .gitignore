@@ -1,0 +1,80 @@
+# -------------------------------
+# Flutter / Dart
+# -------------------------------
+build/
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+.pub/
+.idea/
+.vscode/
+*.iml
+
+# -------------------------------
+# Android / IntelliJ / Gradle
+# -------------------------------
+*.apk
+*.aar
+*.keystore
+local.properties
+.gradle/
+out/
+
+# -------------------------------
+# iOS / Xcode
+# -------------------------------
+ios/Flutter/Flutter.framework
+ios/Flutter/Flutter.podspec
+Pods/
+DerivedData/
+*.xcworkspace
+*.xcuserstate
+
+# -------------------------------
+# Spring Boot / Java
+# -------------------------------
+/target/
+*.class
+*.jar
+*.war
+*.ear
+*.log
+*.iml
+.idea/
+*.DS_Store
+.mvn/
+.settings/
+bin/
+build/
+
+# -------------------------------
+# Python / ML / FastAPI
+# -------------------------------
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+venv/
+env/
+.env
+.ipynb_checkpoints/
+*.egg-info/
+dist/
+build/
+*.sqlite3
+
+# -------------------------------
+# OS-specific
+# -------------------------------
+Thumbs.db
+.DS_Store
+desktop.ini
+
+# -------------------------------
+# Logs / Temporary
+# -------------------------------
+*.log
+*.tmp
+*.bak 

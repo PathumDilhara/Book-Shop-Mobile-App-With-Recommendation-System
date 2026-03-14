@@ -1,0 +1,10 @@
+cd recsys
+python -m venv venv
+venv\Scripts\activate.bat
+pip install fastapi uvicorn pandas numpy scikit-learn
+pip freeze > requirements.txt
+deactivate
+
+# Run in main recsys folder
+uvicorn src.api.main:app --reload
+http://127.0.0.1:8000/

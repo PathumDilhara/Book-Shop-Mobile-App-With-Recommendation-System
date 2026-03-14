@@ -1,0 +1,8 @@
+Ignore these
+============
+__pycache__/
+*.pyc
+*.ipynb_checkpoints
+build/
+.idea/
+.vscode/
