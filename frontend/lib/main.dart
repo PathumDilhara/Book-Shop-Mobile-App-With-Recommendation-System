@@ -12,9 +12,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
+      debugShowCheckedModeBanner: false,
       title: "Book shop app with a recommendation system",
       theme: CustomThemeData.lightTheme,
      routerConfig: AppRouter.router,
     );
   }
 }
+
+// SVG icons : https://www.svgrepo.com/

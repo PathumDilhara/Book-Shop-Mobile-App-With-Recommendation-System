@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:frontend/core/widgets/svg_icon.dart';
 import 'package:frontend/features/check_out/screens/check_out_screen.dart';
 import 'package:frontend/features/explore/screens/explore_screen.dart';
 
@@ -18,7 +19,6 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
   @override
   void initState() {
     super.initState();
-
     screens = [ExploreScreen(), CheckOutScreen(), ExploreScreen()];
   }
 
@@ -27,6 +27,7 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
     return Scaffold(
       body: Stack(
         children: [
+          screens[_selectedIndex],
           Positioned(
             left: 30,
             right: 30,
@@ -83,14 +84,9 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
             color: isSelected ? Colors.blue : Colors.transparent,
             shape: BoxShape.circle,
           ),
-          child: SvgPicture.asset(
-            icon,
-            width: 26,
-            height: 26,
-            colorFilter: ColorFilter.mode(
-              isSelected ? Colors.white : Colors.grey,
-              BlendMode.srcIn,
-            ),
+          child: SvgIcon(
+            icon: icon,
+            color: isSelected ? Colors.white : Colors.grey,
           ),
         ),
       ),
