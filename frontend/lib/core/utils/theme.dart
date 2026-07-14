@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/core/utils/colors.dart';
 
-class CustomThemeData {
+class AppTheme {
   // Light theme
   static ThemeData lightTheme = ThemeData(
     brightness: Brightness.light,
@@ -14,5 +15,25 @@ class CustomThemeData {
     ),
 
     scaffoldBackgroundColor: Colors.white,
+
+    textTheme: TextTheme(
+      headlineLarge: TextStyle(
+        fontSize: 24,
+        fontWeight: FontWeight.bold,
+        color: AppColors.primTextPrimary,
+      ),
+
+      titleLarge: TextStyle(
+        fontSize: 20,
+        fontWeight: FontWeight.w600,
+        color: AppColors.primTextPrimary,
+      ),
+
+      bodyLarge: TextStyle(fontSize: 16, color: AppColors.primTextPrimary),
+
+      bodyMedium: TextStyle(fontSize: 14, color: AppColors.primTextSecondary),
+
+      labelSmall: TextStyle(fontSize: 12, color: AppColors.primTextSecondary),
+    ),
   );
 }

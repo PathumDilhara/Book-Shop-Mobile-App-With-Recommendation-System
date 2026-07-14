@@ -2,6 +2,7 @@ import 'package:frontend/core/bottom_navigation/bottom_navigation.dart';
 import 'package:frontend/core/router/router_paths.dart';
 import 'package:frontend/features/check_out/screens/check_out_screen.dart';
 import 'package:frontend/features/explore/screens/explore_screen.dart';
+import 'package:frontend/features/settings/screens/settings_list_screen.dart';
 import 'package:go_router/go_router.dart';
 
 class AppRouter {
@@ -26,6 +27,12 @@ class AppRouter {
       GoRoute(
         path: "/${RouterPaths.checkOut}",
         builder: (context, state) => CheckOutScreen(),
+      ),
+
+      // Checkout screen
+      GoRoute(
+        path: "/${RouterPaths.settingsListScreen}",
+        builder: (context, state) => SettingsListScreen(),
       ),
     ],
   );

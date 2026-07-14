@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:frontend/core/widgets/svg_icon.dart';
 import 'package:frontend/features/check_out/screens/check_out_screen.dart';
 import 'package:frontend/features/explore/screens/explore_screen.dart';
+import 'package:frontend/features/settings/screens/settings_list_screen.dart';
 
 class BottomNavigationScreen extends StatefulWidget {
   const BottomNavigationScreen({super.key});
@@ -19,7 +20,7 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
   @override
   void initState() {
     super.initState();
-    screens = [ExploreScreen(), CheckOutScreen(), ExploreScreen()];
+    screens = [ExploreScreen(), CheckOutScreen(), SettingsListScreen()];
   }
 
   @override
