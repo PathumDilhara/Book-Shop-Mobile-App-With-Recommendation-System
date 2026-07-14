@@ -1,6 +1,7 @@
 package org.appvibessolution.backend.service;
 
 import jakarta.transaction.Transactional;
+import org.appvibessolution.backend.dto.BookCardDTO;
 import org.appvibessolution.backend.dto.RetrieveBookDTO;
 import org.appvibessolution.backend.dto.SingleBookDATO;
 import org.appvibessolution.backend.model.Book;
@@ -11,6 +12,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -34,24 +36,31 @@ public class BookService {
         this.modelMapper = modelMapper;
     }
 
+    public Page<RetrieveBookDTO> getBooksByPage(int page, int size) {
 
-    public Page<RetrieveBookDTO> getBooksByPage(int page, int size){
         Pageable pageable = PageRequest.of(page, size);
         Page<Book> bookPage = bookRepo.findAll(pageable);
-        Page<RetrieveBookDTO> dtoPage = bookPage.map(book -> new RetrieveBookDTO(
-                book.getId(),
-                book.getTitle(),
-                book.getAuthor(),
-                book.getPrice(),
-                book.getCurrency(),
-                book.getCoverUrl(),
-                book.getUpdatedAt()
-        ));
+
+        Page<RetrieveBookDTO> dtoPage = bookPage.map(book -> {
+
+            RetrieveBookDTO dto = new RetrieveBookDTO();
+
+            dto.setId(book.getId());
+            dto.setTitle(book.getTitle());
+            dto.setAuthor(book.getAuthor());
+            dto.setGenre(book.getGenre());
+            dto.setPrice(book.getPrice());
+            dto.setCurrency(book.getCurrency());
+            dto.setCoverUrl(book.getCoverUrl());
+            dto.setUpdatedAt(book.getUpdatedAt());
+
+            return dto;
+        });
+
         return dtoPage;
     }
 
-
-    public String databaseUpdater(MultipartFile jsonFile){
+    public String databaseUpdater(MultipartFile jsonFile) {
         try {
             System.out.println("Database updating running");
 
@@ -62,7 +71,7 @@ public class BookService {
 
             // Ensure correct file type
             String fileName = jsonFile.getOriginalFilename();
-            if (fileName==null || !fileName.endsWith(".json")){
+            if (fileName == null || !fileName.endsWith(".json")) {
                 throw new RuntimeException("File type not supported, Please upload a JSON file");
             }
 
@@ -73,17 +82,17 @@ public class BookService {
             ObjectMapper objectMapper = new ObjectMapper();
             List<RetrieveBookDTO> bookDTOSs = objectMapper.readValue(
                     jsonData,
-                    new TypeReference<>(){}
-            );
+                    new TypeReference<>() {
+                    });
 
-//            System.out.println(bookDTOSs);
+            // System.out.println(bookDTOSs);
 
             bookRepo.deleteAll();
 
             List<Book> books = bookDTOSs.stream()
                     .map(dto -> {
 
-                        Book book= modelMapper.map(dto, Book.class);
+                        Book book = modelMapper.map(dto, Book.class);
 
                         book.setIsbn(generateISBNFromUUID());
 
@@ -94,7 +103,7 @@ public class BookService {
 
             return "Successfully updated " + savedBooks.size() + " books";
 
-        } catch (Exception ex){
+        } catch (Exception ex) {
             throw new RuntimeException("Error while database updating", ex);
         }
     }
@@ -106,9 +115,7 @@ public class BookService {
         return String.format("%013d", uniqueNumber);
     }
 
-
-
-    public String openLibraryBookLoader(){
+    public String openLibraryBookLoader() {
         try {
             String[] urls = {
                     "https://openlibrary.org/search.json?subject=fiction&limit=20",
@@ -145,9 +152,8 @@ public class BookService {
 
             RestTemplate restTemplate = new RestTemplate();
 
-            for (String url:urls){
-                ResponseEntity<String> response =
-                        restTemplate.getForEntity(url, String.class);
+            for (String url : urls) {
+                ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
                 String jsonString = response.getBody();
 
                 JSONObject jsonObject = new JSONObject(jsonString);
@@ -157,12 +163,12 @@ public class BookService {
             }
 
             return "done";
-        } catch (Exception e){
+        } catch (Exception e) {
             throw new RuntimeException("Error updating database");
         }
     }
 
-    public SingleBookDATO getBookInfo(Long id){
+    public SingleBookDATO getBookById(Long id) {
 
         try {
             if (id == null) {
@@ -173,8 +179,41 @@ public class BookService {
                     () -> new RuntimeException("There is no book under id : " + id));
 
             return modelMapper.map(book, SingleBookDATO.class);
-        } catch (Exception e){
+        } catch (Exception e) {
             throw new RuntimeException("Cant find book info for id : " + id, e);
+        }
+    }
+
+    public List<String> getAllGenres() {
+        try {
+            List<String> genres = bookRepo.findAllGenres();
+
+            return genres;
+        } catch (Exception ex){
+            throw new RuntimeException("Error getting genres : "+ex.getMessage());
+        }
+    }
+
+    public List<BookCardDTO> getTopRatedBooks(){
+        try {
+           Pageable pageable = PageRequest.of(
+                   0, // first page
+                   10, // page content size
+                   Sort.by("rating").descending()
+                   );
+
+           List<Book> books = bookRepo.findAll(pageable).getContent();
+
+           List<BookCardDTO> bookDTOSs = books.stream().map((book ->
+                   new BookCardDTO(
+                           book.getId(),
+                           book.getTitle(),
+                           book.getCoverUrl()
+                   ))).toList();
+
+           return bookDTOSs;
+        } catch (Exception ex){
+            throw new RuntimeException("Error getting top rated books : "+ ex.getMessage());
         }
     }
 }

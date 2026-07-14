@@ -22,6 +22,7 @@ public class Book {
 
     @Column(columnDefinition = "TEXT")
     private String description;
+    
     private String genre;
     private String subGenre;
     private String publisher;
@@ -44,13 +45,13 @@ public class Book {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    @PrePersist
+    @PrePersist 
     protected void onCreate(){
         this.createdAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();
     }
 
-    @PreUpdate
+    @PreUpdate 
     protected void onUpdate(){
         this.updatedAt = LocalDateTime.now();
     }

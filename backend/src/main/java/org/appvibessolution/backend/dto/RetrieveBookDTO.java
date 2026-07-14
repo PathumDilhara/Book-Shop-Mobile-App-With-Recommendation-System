@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -14,6 +13,7 @@ public class RetrieveBookDTO {
     private Long id;
     private String title;
     private String author;
+    private String genre;
     private double price;
     private String currency;
     private String coverUrl;
